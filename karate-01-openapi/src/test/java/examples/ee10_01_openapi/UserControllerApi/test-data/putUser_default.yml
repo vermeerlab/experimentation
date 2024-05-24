@@ -1,0 +1,8 @@
+statusCode: .nan
+headers: {}
+params:
+  id: 0
+body:
+  gender: OTHER
+  name: User Name
+matchResponse: false

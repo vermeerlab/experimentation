@@ -1,0 +1,8 @@
+statusCode: 200
+headers: {}
+params:
+  id: 0
+body:
+  files:
+    - string
+matchResponse: true
