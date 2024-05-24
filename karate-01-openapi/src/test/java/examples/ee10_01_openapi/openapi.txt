@@ -1,0 +1,1721 @@
+openapi: 3.0.0
+info:
+  license:
+    name: MIT license / Copyright (c) 2024 YAMASHITA Takahiro
+    url: https://opensource.org/licenses/mit-license.php
+externalDocs:
+  description: externalDocs.description()
+  url: https://github.com/vermeerlab/experimentation
+servers:
+- url: http://vermeer-virtualbox:8080/ee10-01-openapi
+  description: Default Server.
+- url: https://vermeer-virtualbox:8181/ee10-01-openapi
+  description: Default Server.
+security:
+- access_token: []
+paths:
+  /api/open-api-custom/beamparam:
+    get:
+      tags:
+      - UserOpenApiCustomController
+      summary: ユーザー情報を検索します（BeanParamを使用）
+      description: クエリーで指定した条件を絞り込み条件として使用します。<br>条件を指定しない場合は全レコードが取得対象となります。<br>
+      operationId: getUsersByBeanParam
+      parameters:
+      - name: gender
+        in: query
+        description: 性別
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          $ref: "#/components/schemas/Gender"
+      - name: name
+        in: query
+        description: ユーザー名
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          multipleOf: 0.0
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          maxLength: 2147483647
+          minLength: 0
+          maxItems: -2147483648
+          minItems: 2147483647
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: string
+          nullable: false
+          readOnly: false
+          writeOnly: false
+          example: User Name
+          deprecated: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/UserResponse"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+                allOf:
+                - $ref: "#/components/schemas/BaseResponseBody"
+              examples:
+                default:
+                  value: |-
+                    {
+                      "body": [
+                        {
+                          "gender": "OTHER",
+                          "name": "Name:example",
+                          "id": "100"
+                        }
+                      ],
+                      "ok": true
+                    }
+                return 2 record:
+                  value: |-
+                    {
+                      "body": [
+                        {
+                          "gender": "MALE",
+                          "name": "Name:user name1",
+                          "id": "1"
+                        },
+                        {
+                          "gender": "OTHER",
+                          "name": "Name:user name2",
+                          "id": "2"
+                        }
+                      ],
+                      "ok": true
+                    }
+      deprecated: false
+  /api/open-api-custom/enumlist:
+    get:
+      tags:
+      - UserOpenApiCustomController
+      summary: ユーザー情報を検索します
+      description: クエリーで指定した条件を絞り込み条件として使用します。<br>条件を指定しない場合は全レコードが取得対象となります
+      operationId: getUsersByQueryWithListEnum
+      parameters:
+      - name: genders
+        in: query
+        description: 性別（複数指定）
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          type: array
+          $ref: "#/components/schemas/Genders"
+      - name: gender
+        in: query
+        description: 性別
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          type: object
+          $ref: "#/components/schemas/Gender"
+      - name: name
+        in: query
+        description: ユーザー名
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          multipleOf: 0.0
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          maxLength: 2147483647
+          minLength: 0
+          maxItems: -2147483648
+          minItems: 2147483647
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: string
+          nullable: false
+          readOnly: false
+          writeOnly: false
+          deprecated: false
+        example: user name
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/UserResponse"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+                allOf:
+                - $ref: "#/components/schemas/BaseResponseBody"
+              examples:
+                default:
+                  value: |-
+                    {
+                      "body": [
+                        {
+                          "gender": "OTHER",
+                          "name": "Name:example",
+                          "id": "100"
+                        }
+                      ],
+                      "ok": true
+                    }
+                return 2 record:
+                  value: |-
+                    {
+                      "body": [
+                        {
+                          "gender": "MALE",
+                          "name": "Name:user name1",
+                          "id": "1"
+                        },
+                        {
+                          "gender": "OTHER",
+                          "name": "Name:user name2",
+                          "id": "2"
+                        }
+                      ],
+                      "ok": true
+                    }
+      deprecated: false
+  /api/open-api-custom/{id}/file:
+    post:
+      tags:
+      - UserOpenApiCustomController
+      summary: ユーザーに関連するファイルをアップロードします
+      operationId: postCustomUploadUserFile
+      parameters:
+      - name: id
+        in: path
+        description: ユーザーID
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          type: string
+      requestBody:
+        description: アップロードファイルを選択してください
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UploadFile"
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: "{\"ok\": true}"
+      deprecated: false
+  /api/open-api-custom/{id}/files:
+    post:
+      tags:
+      - UserOpenApiCustomController
+      summary: ユーザーに関連するファイルを複数アップロードします
+      operationId: postCustomUploadUserFiles
+      parameters:
+      - name: id
+        in: path
+        description: ユーザーID
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          type: string
+      requestBody:
+        description: アップロードファイルを選択してください
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UploadFiles"
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: "{\"ok\": true}"
+      deprecated: false
+  /api/openapi-http-ng-status/{httpStatus}:
+    get:
+      tags:
+      - ExceptionController
+      summary: HttpのNGステータスのレスポンス仕様
+      description: |-
+        多くのケースでは2xx以外のステータスはExceptionHandlerなどで一括して操作を行います.<br>
+        各API毎に4xxのステータス仕様を記載したり、共通して出力するような実装を追加することもできますが<br>
+        冗長な記載を減らすため本URLに4xxおよび5xxのAPI仕様は本URLへ集約します.
+        クライアントにて4xx,5xxのHttpステータス毎の制御確認での利用も想定しています.
+      operationId: getHttpNgStatus
+      parameters:
+      - name: httpStatus
+        in: path
+        description: 確認したいHTTPステータス
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: integer
+          nullable: false
+          readOnly: false
+          writeOnly: false
+          deprecated: false
+          enum:
+          - "400"
+          - "401"
+          - "403"
+          - "404"
+          - "405"
+          - "406"
+          - "415"
+          - "500"
+          - "503"
+      responses:
+        "400":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    $ref: "#/components/schemas/ErrorResponses"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: |-
+                    {
+                      "ok": false,
+                      "body": {
+                        "errors": [
+                          {
+                            "message": "構文が無効です",
+                            "messageCode": "HTTP_STATUS_BAD_REQUEST"
+                          }
+                        ]
+                      }
+                    }
+        "401":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    $ref: "#/components/schemas/ErrorResponses"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: |-
+                    {
+                      "ok": false,
+                      "body": {
+                        "errors": [
+                          {
+                            "message": "未認証です",
+                            "messageCode": "HTTP_STATUS_UNAUTHORIZED"
+                          }
+                        ]
+                      }
+                    }
+        "403":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    $ref: "#/components/schemas/ErrorResponses"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: |-
+                    {
+                      "ok": false,
+                      "body": {
+                        "errors": [
+                          {
+                            "message": "アクセス権がありません",
+                            "messageCode": "HTTP_STATUS_FORBIDDEN"
+                          }
+                        ]
+                      }
+                    }
+        "404":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    $ref: "#/components/schemas/ErrorResponses"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: |-
+                    {
+                      "ok": false,
+                      "body": {
+                        "errors": [
+                          {
+                            "message": "対象が存在しません",
+                            "messageCode": "HTTP_STATUS_NOT_FOUND"
+                          }
+                        ]
+                      }
+                    }
+        "405":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    $ref: "#/components/schemas/ErrorResponses"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: |-
+                    {
+                      "ok": false,
+                      "body": {
+                        "errors": [
+                          {
+                            "message": "Httpメソッドが無効です",
+                            "messageCode": "HTTP_STATUS_METHOD_NOT_ALLOWED"
+                          }
+                        ]
+                      }
+                    }
+        "406":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    $ref: "#/components/schemas/ErrorResponses"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: |-
+                    {
+                      "ok": false,
+                      "body": {
+                        "errors": [
+                          {
+                            "message": "指定のデータ形式は提供していません",
+                            "messageCode": "HTTP_STATUS_NOT_ACCEPTABLE"
+                          }
+                        ]
+                      }
+                    }
+        "415":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    $ref: "#/components/schemas/ErrorResponses"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: |-
+                    {
+                      "ok": false,
+                      "body": {
+                        "errors": [
+                          {
+                            "message": "指定のメディア形式は提供していません",
+                            "messageCode": "HTTP_STATUS_UNSUPPORTED_MEDIA_TYPE"
+                          }
+                        ]
+                      }
+                    }
+        "500":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    $ref: "#/components/schemas/ErrorResponses"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: |-
+                    {
+                      "ok": false,
+                      "body": {
+                        "errors": [
+                          {
+                            "message": "システム内部エラー",
+                            "messageCode": "HTTP_STATUS_INTERNAL_SERVER_ERROR"
+                          }
+                        ]
+                      }
+                    }
+        "503":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    $ref: "#/components/schemas/ErrorResponses"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: |-
+                    {
+                      "ok": false,
+                      "body": {
+                        "errors": [
+                          {
+                            "message": "一時的に利用できません",
+                            "messageCode": "HTTP_STATUS_SERVICE_UNAVAILABLE"
+                          }
+                        ]
+                      }
+                    }
+      deprecated: false
+  /api/users:
+    post:
+      tags:
+      - UserController
+      summary: ユーザー情報を登録します
+      operationId: postUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequest"
+            examples:
+              default:
+                value: |-
+                  {
+                      "gender": "MALE",
+                      "name": "Name:name-1"
+                  }
+        required: false
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    $ref: "#/components/schemas/UserResourceId"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: |-
+                    {
+                      "body": {
+                        "id": "57d1a3b9-bb09-42f4-9913-941de0a7d4cb"
+                      },
+                      "ok": true
+                    }
+      deprecated: false
+    get:
+      tags:
+      - UserController
+      summary: ユーザー情報を検索します
+      description: クエリーで指定した条件を絞り込み条件として使用します。<br>条件を指定しない場合は全レコードが取得対象となります
+      operationId: getUsersByQuery
+      parameters:
+      - name: gender
+        in: query
+        description: 性別
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          multipleOf: 0.0
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          maxLength: 2147483647
+          minLength: 0
+          maxItems: -2147483648
+          minItems: 2147483647
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: string
+          nullable: false
+          readOnly: false
+          writeOnly: false
+          deprecated: false
+          enum:
+          - MALE
+          - FEMALE
+          - OTHER
+      - name: name
+        in: query
+        description: ユーザー名
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          type: string
+        example: user name
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/UserResponse"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+                allOf:
+                - $ref: "#/components/schemas/BaseResponseBody"
+              examples:
+                default:
+                  value: |-
+                    {
+                      "body": [
+                        {
+                          "gender": "OTHER",
+                          "name": "Name:example",
+                          "id": "100"
+                        }
+                      ],
+                      "ok": true
+                    }
+                return 2 record:
+                  value: |-
+                    {
+                      "body": [
+                        {
+                          "gender": "MALE",
+                          "name": "Name:user name1",
+                          "id": "1"
+                        },
+                        {
+                          "gender": "OTHER",
+                          "name": "Name:user name2",
+                          "id": "2"
+                        }
+                      ],
+                      "ok": true
+                    }
+      deprecated: false
+  /api/users/{id}:
+    put:
+      tags:
+      - UserController
+      summary: ユーザー情報を更新します
+      operationId: putUser
+      parameters:
+      - name: id
+        in: path
+        description: ユーザーID
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          type: string
+        example: 57d1a3b9-bb09-42f4-9913-941de0a7d4cb
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequest"
+            examples:
+              default:
+                value: |-
+                  {
+                      "gender": "MALE",
+                      "name": "Name:name-1"
+                  }
+        required: false
+      responses:
+        "204": {}
+      deprecated: false
+    delete:
+      tags:
+      - UserController
+      summary: ユーザー情報を削除します
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        description: ユーザーID
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          type: string
+        example: 57d1a3b9-bb09-42f4-9913-941de0a7d4cb
+      responses:
+        "204": {}
+      deprecated: false
+    get:
+      tags:
+      - UserController
+      summary: ユーザー情報を検索します
+      operationId: getUserById
+      parameters:
+      - name: id
+        in: path
+        description: ユーザーID
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  body:
+                    $ref: "#/components/schemas/UserResponse"
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: |-
+                    {
+                      "body": {
+                        "gender": "OTHER",
+                        "name": "Name:example",
+                        "id": "100"
+                      },
+                      "ok": true
+                    }
+      deprecated: false
+  /api/users/{id}/file:
+    post:
+      tags:
+      - UserController
+      summary: ユーザーに関連するファイルをアップロードします
+      operationId: postUploadUserFile
+      parameters:
+      - name: id
+        in: path
+        description: ユーザーID
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          type: string
+      requestBody:
+        description: アップロードファイルを選択してください
+        content:
+          multipart/form-data:
+            schema:
+              exclusiveMaximum: false
+              exclusiveMinimum: false
+              minLength: 0
+              uniqueItems: false
+              maxProperties: 0
+              minProperties: 0
+              type: object
+              properties:
+                file:
+                  multipleOf: 0.0
+                  exclusiveMaximum: false
+                  exclusiveMinimum: false
+                  maxLength: 2147483647
+                  minLength: 0
+                  maxItems: -2147483648
+                  minItems: 2147483647
+                  uniqueItems: false
+                  maxProperties: 0
+                  minProperties: 0
+                  type: string
+                  format: binary
+                  nullable: false
+                  readOnly: false
+                  writeOnly: false
+                  deprecated: false
+              nullable: false
+              readOnly: false
+              writeOnly: false
+              deprecated: false
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                exclusiveMaximum: false
+                exclusiveMinimum: false
+                minLength: 0
+                uniqueItems: false
+                maxProperties: 0
+                minProperties: 0
+                type: object
+                properties:
+                  ok:
+                    title: レスポンス成否
+                    exclusiveMaximum: false
+                    exclusiveMinimum: false
+                    minLength: 0
+                    uniqueItems: false
+                    maxProperties: 0
+                    minProperties: 0
+                    type: boolean
+                    description: 正常の場合はtrue
+                    nullable: false
+                    readOnly: true
+                    writeOnly: false
+                    deprecated: false
+                nullable: false
+                readOnly: false
+                writeOnly: false
+                deprecated: false
+              examples:
+                default:
+                  value: "{\"ok\": true}"
+      deprecated: false
+    get:
+      tags:
+      - UserController
+      summary: ユーザー情報のファイルをダウンロードします
+      operationId: getDownloadUserFile
+      parameters:
+      - name: id
+        in: path
+        description: ユーザーID
+        required: false
+        deprecated: false
+        allowEmptyValue: false
+        allowReserved: false
+        schema:
+          type: string
+      responses:
+        "200": {}
+      deprecated: false
+endpoints:
+  /ee10-01-openapi:
+  - /api/open-api-custom/beamparam
+  - /api/open-api-custom/enumlist
+  - "/api/open-api-custom/{id}/file"
+  - "/api/open-api-custom/{id}/files"
+  - "/api/openapi-http-ng-status/{httpStatus}"
+  - /api/users
+  - "/api/users/{id}"
+  - "/api/users/{id}/file"
+components:
+  schemas:
+    BaseResponseBody:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      type: object
+      properties:
+        ok:
+          title: レスポンス成否
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: boolean
+          description: 正常の場合はtrue
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+    ErrorResponse:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      type: object
+      properties:
+        messageCode:
+          title: メッセージコード
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: string
+          nullable: false
+          readOnly: false
+          writeOnly: false
+          example: NOT_FOUND
+          deprecated: false
+        message:
+          title: メッセージ
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: string
+          nullable: false
+          readOnly: false
+          writeOnly: false
+          example: Resource Not Found
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+    ErrorResponseBody:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      type: object
+      properties:
+        body:
+          $ref: "#/components/schemas/ErrorResponses"
+        ok:
+          title: レスポンス成否
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: boolean
+          description: 正常の場合はtrue
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+    ErrorResponses:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/ErrorResponse"
+    Gender:
+      type: string
+      description: Genderのスキーマです.
+      example: MALE
+      enum:
+      - MALE
+      - FEMALE
+      - OTHER
+    Genders:
+      type: array
+      description: Genderを複数指定するためのスキーマです.
+      example: MALE
+      items:
+        type: string
+        enum:
+        - MALE
+        - FEMALE
+        - OTHER
+    ResponseBody:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      type: object
+      properties:
+        body:
+          title: レスポンスボディ
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: object
+          description: レスポンス毎の独自の型のオブジェクト
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          deprecated: false
+        ok:
+          title: レスポンス成否
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: boolean
+          description: 正常の場合はtrue
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+    ResponseListBody:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      type: object
+      properties:
+        body:
+          title: レスポンスボディ
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: array
+          description: レスポンス毎の独自の型のオブジェクト
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          deprecated: false
+          items:
+            type: array
+        ok:
+          title: レスポンス成否
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: boolean
+          description: 正常の場合はtrue
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+    UploadFile:
+      type: object
+      properties:
+        file:
+          type: array
+          items:
+            type: string
+            format: binary
+      description: アップロードを複数指定するためのスキーマです.
+    UploadFiles:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+      description: アップロードを複数指定するためのスキーマです.
+    UserRequest:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      required:
+      - gender
+      - name
+      type: object
+      properties:
+        gender:
+          title: 性別
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: string
+          nullable: false
+          readOnly: false
+          writeOnly: false
+          example: OTHER
+          deprecated: false
+          enum:
+          - MALE
+          - FEMALE
+          - OTHER
+        name:
+          title: ユーザー名
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: string
+          nullable: false
+          readOnly: false
+          writeOnly: false
+          example: User Name
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+    UserResourceId:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      type: object
+      properties:
+        id:
+          title: 新規ユーザーID
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: string
+          nullable: false
+          readOnly: false
+          writeOnly: false
+          example: UUID
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+    UserResponse:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      type: object
+      properties:
+        id:
+          title: ユーザーID
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: string
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          example: uuid
+          deprecated: false
+        gender:
+          title: 性別
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: string
+          nullable: false
+          readOnly: false
+          writeOnly: false
+          example: OTHER
+          deprecated: false
+          enum:
+          - MALE
+          - FEMALE
+          - OTHER
+        name:
+          title: ユーザー名
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: string
+          nullable: false
+          readOnly: false
+          writeOnly: false
+          example: User Name
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+      allOf:
+      - $ref: "#/components/schemas/UserRequest"
+    UserResponseBody:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      type: object
+      properties:
+        body:
+          $ref: "#/components/schemas/UserResponse"
+        ok:
+          title: レスポンス成否
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: boolean
+          description: 正常の場合はtrue
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+    UserResponseIdBody:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      type: object
+      properties:
+        body:
+          $ref: "#/components/schemas/UserResourceId"
+        ok:
+          title: レスポンス成否
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: boolean
+          description: 正常の場合はtrue
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+    UserResponseListBody:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      type: object
+      properties:
+        body:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserResponse"
+        ok:
+          title: レスポンス成否
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: boolean
+          description: 正常の場合はtrue
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+      allOf:
+      - $ref: "#/components/schemas/BaseResponseBody"
+    UserResponseListNgBody:
+      exclusiveMaximum: false
+      exclusiveMinimum: false
+      minLength: 0
+      uniqueItems: false
+      maxProperties: 0
+      minProperties: 0
+      type: object
+      properties:
+        body:
+          title: レスポンスボディ
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: array
+          description: レスポンス毎の独自の型のオブジェクト
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          deprecated: false
+          items:
+            type: object
+        ok:
+          title: レスポンス成否
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+          minLength: 0
+          uniqueItems: false
+          maxProperties: 0
+          minProperties: 0
+          type: boolean
+          description: 正常の場合はtrue
+          nullable: false
+          readOnly: true
+          writeOnly: false
+          deprecated: false
+      nullable: false
+      readOnly: false
+      writeOnly: false
+      deprecated: false
+  securitySchemes:
+    access_token:
+      type: http
+      description: JWTトークン
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

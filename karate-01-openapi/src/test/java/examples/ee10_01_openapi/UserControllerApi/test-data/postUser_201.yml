@@ -1,0 +1,7 @@
+statusCode: 201
+headers: {}
+params: {}
+body:
+  gender: OTHER
+  name: User Name
+matchResponse: true

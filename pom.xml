@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.vermeerlab</groupId>
+    <artifactId>experimentation</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>java-parent</module>
+        <module>base-domain</module>
+        <module>ts-generator-plugin</module>
+        <module>ee10-01-openapi</module>
+        <module>ee-parent</module>
+        <module>archunit-junit5-plugin</module>
+        <module>ee-plugin-version</module>
+        <module>karate-01-openapi</module>
+    </modules>
+
+</project>
