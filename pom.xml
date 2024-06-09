@@ -11,6 +11,7 @@
         <module>base-domain</module>
         <module>ts-generator-plugin</module>
         <module>ee10-01-openapi</module>
+        <module>ee10-02-openapi</module>
         <module>ee-parent</module>
         <module>archunit-junit5-plugin</module>
         <module>ee-plugin-version</module>
