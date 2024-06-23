@@ -35,6 +35,7 @@
         <maven.project.info.reports.version>3.5.0</maven.project.info.reports.version>
         <maven.javadoc.version>3.6.3</maven.javadoc.version>
         <maven.jxr.version>3.3.2</maven.jxr.version>
+        <maven.surefire.version>3.2.5</maven.surefire.version>
     </properties>
 
     <dependencyManagement>
@@ -204,6 +205,17 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+                <configuration>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <skipTests>false</skipTests>
+                </configuration>
+            </plugin>
+
 
         </plugins>
     </build>

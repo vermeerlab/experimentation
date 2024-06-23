@@ -1,0 +1,15 @@
+{
+    "body": [
+        {
+            "gender": "MALE",
+            "name": "Name:user name1",
+            "id": "1"
+        },
+        {
+            "gender": "OTHER",
+            "name": "Name:user name2",
+            "id": "2"
+        }
+    ],
+    "ok": true
+}
