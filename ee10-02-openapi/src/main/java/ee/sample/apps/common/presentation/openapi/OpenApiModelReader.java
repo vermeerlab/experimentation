@@ -1,7 +1,6 @@
 package ee.sample.apps.common.presentation.openapi;
 
-import ee.sample.apps.context.user.domain.Gender;
-import ee.sample.plugin.openapi.OpenApiSchemaUtil;
+import java.util.logging.Logger;
 import org.eclipse.microprofile.openapi.OASFactory;
 import org.eclipse.microprofile.openapi.OASModelReader;
 import org.eclipse.microprofile.openapi.models.OpenAPI;
@@ -11,8 +10,12 @@ import org.eclipse.microprofile.openapi.models.security.SecurityScheme.In;
 /** OpenAPIのOASModelReaderの実装. */
 public class OpenApiModelReader implements OASModelReader {
 
+  private static final Logger logger = Logger.getLogger(OpenApiModelReader.class.getName());
+
   @Override
   public OpenAPI buildModel() {
+
+    logger.info("OpenApiModelReader::buildModel");
 
     var license =
         OASFactory.createLicense()
@@ -37,12 +40,9 @@ public class OpenApiModelReader implements OASModelReader {
             .in(In.HEADER);
 
     var components =
-        OASFactory.createComponents()
-            .addSecurityScheme("access_token", securityScheme)
-            .addSchema("Gender", OpenApiSchemaUtil.createEnumSchema(Gender.class))
-            .addSchema("Genders", OpenApiSchemaUtil.createEnumListSchema(Gender.class))
-            .addSchema("UploadFile", OpenApiSchemaUtil.createUploadFileSchema())
-            .addSchema("UploadFiles", OpenApiSchemaUtil.createUploadFileListSchema());
+        OASFactory.createComponents().addSecurityScheme("access_token", securityScheme);
+
+    OpenApiSchema.appendSchema(components);
 
     var openApi = OASFactory.createOpenAPI();
     openApi

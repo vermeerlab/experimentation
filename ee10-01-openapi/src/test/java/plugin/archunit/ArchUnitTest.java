@@ -182,10 +182,7 @@ public class ArchUnitTest {
           .resideInAnyPackage("..domain..")
           .should()
           .onlyDependOnClassesThat(
-              resideInAnyPackage(
-                  "..(**).domain..",
-                  "java..",
-                  "edu.umd.cs.findbugs.annotations.SuppressFBWarnings"))
+              resideInAnyPackage("..(**).domain..", "java..", "edu.umd.cs.findbugs.annotations.."))
           .because("DomainクラスはDomainおよびJava言語仕様以外の依存は許容しません.");
 
   /**

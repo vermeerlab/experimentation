@@ -1,12 +1,14 @@
 package ee.sample.apps.context.user.presentation;
 
 import ee.sample.apps.common.presentation.openapi.BaseResponseBody;
+import ee.sample.apps.common.presentation.openapi.OpenApiSchema;
 import ee.sample.apps.common.presentation.openapi.ResponseFactory;
 import ee.sample.apps.context.user.application.SearchUser;
 import ee.sample.apps.context.user.domain.Gender;
 import ee.sample.apps.context.user.domain.UserSearchCondition;
 import ee.sample.apps.context.user.domain.UserSearchMultiGenderCondition;
 import ee.sample.spec.layer.presentation.EntryPoint;
+import ee.sample.utils.json.JsonUtil;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
@@ -54,37 +56,10 @@ public class UserOpenApiCustomController {
             examples = {
               @ExampleObject(
                   name = "default",
-                  value =
-                      ""
-                          + "{\n"
-                          + "  \"body\": [\n"
-                          + "    {\n"
-                          + "      \"gender\": \"OTHER\",\n"
-                          + "      \"name\": \"Name:example\",\n"
-                          + "      \"id\": \"100\"\n"
-                          + "    }\n"
-                          + "  ],\n"
-                          + "  \"ok\": true\n"
-                          + "}"),
+                  externalValue = "openapi/user/get_response_default.json"),
               @ExampleObject(
                   name = "return 2 record",
-                  value =
-                      ""
-                          + "{\n"
-                          + "  \"body\": [\n"
-                          + "    {\n"
-                          + "      \"gender\": \"MALE\",\n"
-                          + "      \"name\": \"Name:user name1\",\n"
-                          + "      \"id\": \"1\"\n"
-                          + "    },\n"
-                          + "    {\n"
-                          + "      \"gender\": \"OTHER\",\n"
-                          + "      \"name\": \"Name:user name2\",\n"
-                          + "      \"id\": \"2\"\n"
-                          + "    }\n"
-                          + "  ],\n"
-                          + "  \"ok\": true\n"
-                          + "}")
+                  externalValue = "openapi/user/get_response_2_record.json")
             })
       },
       responseCode = "200")
@@ -93,12 +68,12 @@ public class UserOpenApiCustomController {
         name = "gender",
         in = ParameterIn.QUERY,
         description = "性別",
-        schema = @Schema(ref = "#/components/schemas/Gender")),
+        schema = @Schema(ref = OpenApiSchema.Gender)),
     @Parameter(
         name = "name",
         in = ParameterIn.QUERY,
         description = "ユーザー名",
-        schema = @Schema(example = "User Name", implementation = String.class))
+        schema = @Schema(example = "User Name"))
   })
   public Response getUsersByBeanParam(@BeanParam UserQueryParam userQueryParam) {
 
@@ -121,37 +96,10 @@ public class UserOpenApiCustomController {
             examples = {
               @ExampleObject(
                   name = "default",
-                  value =
-                      ""
-                          + "{\n"
-                          + "  \"body\": [\n"
-                          + "    {\n"
-                          + "      \"gender\": \"OTHER\",\n"
-                          + "      \"name\": \"Name:example\",\n"
-                          + "      \"id\": \"100\"\n"
-                          + "    }\n"
-                          + "  ],\n"
-                          + "  \"ok\": true\n"
-                          + "}"),
+                  externalValue = "openapi/user/get_response_default.json"),
               @ExampleObject(
                   name = "return 2 record",
-                  value =
-                      ""
-                          + "{\n"
-                          + "  \"body\": [\n"
-                          + "    {\n"
-                          + "      \"gender\": \"MALE\",\n"
-                          + "      \"name\": \"Name:user name1\",\n"
-                          + "      \"id\": \"1\"\n"
-                          + "    },\n"
-                          + "    {\n"
-                          + "      \"gender\": \"OTHER\",\n"
-                          + "      \"name\": \"Name:user name2\",\n"
-                          + "      \"id\": \"2\"\n"
-                          + "    }\n"
-                          + "  ],\n"
-                          + "  \"ok\": true\n"
-                          + "}")
+                  externalValue = "openapi/user/get_response_2_record.json")
             })
       },
       responseCode = "200")
@@ -159,16 +107,9 @@ public class UserOpenApiCustomController {
     @Parameter(
         name = "genders",
         description = "性別（複数指定）",
-        schema = @Schema(ref = "#/components/schemas/Genders")),
-    @Parameter(
-        name = "gender",
-        description = "性別",
-        schema = @Schema(ref = "#/components/schemas/Gender")),
-    @Parameter(
-        name = "name",
-        description = "ユーザー名",
-        example = "user name",
-        schema = @Schema(implementation = String.class))
+        schema = @Schema(ref = OpenApiSchema.Genders)),
+    @Parameter(name = "gender", description = "性別", schema = @Schema(ref = OpenApiSchema.Gender)),
+    @Parameter(name = "name", description = "ユーザー名", example = "user name")
   })
   public Response getUsersByQueryWithListEnum(
       @QueryParam("genders") List<Gender> genders,
@@ -190,17 +131,18 @@ public class UserOpenApiCustomController {
         @Content(
             mediaType = MediaType.APPLICATION_JSON,
             schema = @Schema(implementation = BaseResponseBody.class),
-            examples = @ExampleObject(name = "default", value = "{\"ok\": true}"))
+            examples = @ExampleObject(name = "default", externalValue = "openapi/response_ok.json"))
       },
       responseCode = "200")
-  @Parameters(@Parameter(name = "id", description = "ユーザーID"))
+  @Parameters(@Parameter(name = "id", description = "ユーザーID", required = true))
   @RequestBody(
       name = "file",
       description = "アップロードファイルを選択してください",
+      required = true,
       content =
           @Content(
               mediaType = MediaType.MULTIPART_FORM_DATA,
-              schema = @Schema(ref = "#/components/schemas/UploadFile")))
+              schema = @Schema(ref = OpenApiSchema.UploadFile)))
   public Response postCustomUploadUserFile(@PathParam("id") String id, EntityPart file) {
 
     String name = file.getName();
@@ -220,20 +162,21 @@ public class UserOpenApiCustomController {
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   @Produces(MediaType.APPLICATION_JSON)
   @Operation(summary = "ユーザーに関連するファイルを複数アップロードします")
-  @Parameters(@Parameter(name = "id", description = "ユーザーID"))
+  @Parameters(@Parameter(name = "id", description = "ユーザーID", required = true))
   @RequestBody(
       name = "files",
       description = "アップロードファイルを選択してください",
+      required = true,
       content =
           @Content(
               mediaType = MediaType.MULTIPART_FORM_DATA,
-              schema = @Schema(ref = "#/components/schemas/UploadFiles")))
+              schema = @Schema(ref = OpenApiSchema.UploadFiles)))
   @APIResponse(
       content = {
         @Content(
             mediaType = MediaType.APPLICATION_JSON,
             schema = @Schema(implementation = BaseResponseBody.class),
-            examples = @ExampleObject(name = "default", value = "{\"ok\": true}"))
+            examples = @ExampleObject(name = "default", externalValue = "openapi/response_ok.json"))
       },
       responseCode = "200")
   public Response postCustomUploadUserFiles(@PathParam("id") String id, List<EntityPart> files) {
@@ -249,5 +192,31 @@ public class UserOpenApiCustomController {
       System.out.println("mediaType:" + mediaType.getType());
     }
     return ResponseFactory.success();
+  }
+
+  @GET
+  @Path("json/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Operation(
+      summary = "ユーザー情報を検索します(JsonMock)",
+      description = "ExampleObjectで指定したJsonファイルをモックとしてレスポンスとして返却します.")
+  @APIResponse(
+      content = {
+        @Content(
+            mediaType = MediaType.APPLICATION_JSON,
+            schema = @Schema(implementation = UserResponse.UserResponseBody.class),
+            examples = {
+              @ExampleObject(
+                  name = "default",
+                  externalValue = "openapi/user/get_response_default.json")
+            })
+      },
+      responseCode = "200")
+  @Parameters({@Parameter(name = "id", description = "ユーザーID", required = true)})
+  public UserResponse.UserResponseBody getJsonUserById(@PathParam("id") String id) {
+    var response =
+        JsonUtil.readFromResource(
+            "openapi/user/get_response_default.json", UserResponse.UserResponseBody.class);
+    return response.get();
   }
 }

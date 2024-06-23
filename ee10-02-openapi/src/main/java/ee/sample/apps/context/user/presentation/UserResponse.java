@@ -3,7 +3,6 @@ package ee.sample.apps.context.user.presentation;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import ee.sample.apps.common.presentation.openapi.BaseResponseBody;
 import ee.sample.apps.common.presentation.openapi.ResponseBody;
-import ee.sample.apps.common.presentation.openapi.ResponseListBody;
 import ee.sample.apps.context.user.domain.User;
 import ee.sample.apps.context.user.domain.Users;
 import java.util.Comparator;
@@ -23,7 +22,7 @@ public class UserResponse extends UserRequest {
 
   static UserResponse from(User user) {
     var res = new UserResponse();
-    res.setGender(user.getGender().name());
+    res.setGender(user.getGender());
     res.setId(user.getUserId().getValue());
     res.setName(user.getName().getOrDefault());
 
@@ -40,8 +39,6 @@ public class UserResponse extends UserRequest {
   }
 
   static class UserResponseBody extends ResponseBody<UserResponse> {}
-
-  static class UserResponseListNgBody extends ResponseListBody<UserResponse> {}
 
   static class UserResponseListBody extends BaseResponseBody {
     @SuppressFBWarnings("UUF_UNUSED_FIELD")

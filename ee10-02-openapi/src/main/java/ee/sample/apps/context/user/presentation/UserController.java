@@ -1,6 +1,7 @@
 package ee.sample.apps.context.user.presentation;
 
 import ee.sample.apps.common.presentation.openapi.BaseResponseBody;
+import ee.sample.apps.common.presentation.openapi.OpenApiSchema;
 import ee.sample.apps.common.presentation.openapi.ResponseFactory;
 import ee.sample.apps.context.user.application.DeleteUser;
 import ee.sample.apps.context.user.application.PersistUser;
@@ -28,11 +29,9 @@ import jakarta.ws.rs.core.StreamingOutput;
 import java.io.OutputStream;
 import java.util.Optional;
 import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.ExampleObject;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.eclipse.microprofile.openapi.annotations.media.SchemaProperty;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameters;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
@@ -68,14 +67,15 @@ public class UserController {
                           + "  \"body\": {\n"
                           + "    \"gender\": \"OTHER\",\n"
                           + "    \"name\": \"Name:example\",\n"
-                          + "    \"id\": \"100\"\n"
+                          + "    \"id\": \"aaa\"\n"
                           + "  },\n"
                           + "  \"ok\": true\n"
-                          + "}")
+                          + "}",
+                  externalValue = "openapi/user/get_response_default.json")
             })
       },
       responseCode = "200")
-  @Parameters({@Parameter(name = "id", description = "ユーザーID")})
+  @Parameters({@Parameter(name = "id", description = "ユーザーID", required = true)})
   public Response getUserById(@PathParam("id") String id) {
     var model = searchUser.findById(UserId.of(id)).orElseThrow(() -> new NotFoundException());
     return ResponseFactory.success(UserResponse.from(model));
@@ -95,48 +95,15 @@ public class UserController {
             examples = {
               @ExampleObject(
                   name = "default",
-                  value =
-                      ""
-                          + "{\n"
-                          + "  \"body\": [\n"
-                          + "    {\n"
-                          + "      \"gender\": \"OTHER\",\n"
-                          + "      \"name\": \"Name:example\",\n"
-                          + "      \"id\": \"100\"\n"
-                          + "    }\n"
-                          + "  ],\n"
-                          + "  \"ok\": true\n"
-                          + "}"),
+                  externalValue = "openapi/user/get_response_default.json"),
               @ExampleObject(
                   name = "return 2 record",
-                  value =
-                      ""
-                          + "{\n"
-                          + "  \"body\": [\n"
-                          + "    {\n"
-                          + "      \"gender\": \"MALE\",\n"
-                          + "      \"name\": \"Name:user name1\",\n"
-                          + "      \"id\": \"1\"\n"
-                          + "    },\n"
-                          + "    {\n"
-                          + "      \"gender\": \"OTHER\",\n"
-                          + "      \"name\": \"Name:user name2\",\n"
-                          + "      \"id\": \"2\"\n"
-                          + "    }\n"
-                          + "  ],\n"
-                          + "  \"ok\": true\n"
-                          + "}")
+                  externalValue = "openapi/user/get_response_2_record.json")
             })
       },
       responseCode = "200")
   @Parameters({
-    @Parameter(
-        name = "gender",
-        description = "性別",
-        schema =
-            @Schema(
-                enumeration = {"MALE", "FEMALE", "OTHER"},
-                implementation = String.class)),
+    @Parameter(name = "gender", description = "性別", schema = @Schema(ref = OpenApiSchema.Gender)),
     @Parameter(name = "name", description = "ユーザー名", example = "user name")
   })
   public Response getUsersByQuery(
@@ -159,14 +126,7 @@ public class UserController {
               examples = {
                 @ExampleObject(
                     name = "default",
-                    value =
-                        ""
-                            + "{\n"
-                            + "  \"body\": {\n"
-                            + "    \"id\": \"57d1a3b9-bb09-42f4-9913-941de0a7d4cb\"\n"
-                            + "  },\n"
-                            + "  \"ok\": true\n"
-                            + "}")
+                    externalValue = "openapi/user/post_response_default.json")
               }),
       responseCode = "201")
   @RequestBody(
@@ -176,12 +136,7 @@ public class UserController {
               examples = {
                 @ExampleObject(
                     name = "default",
-                    value =
-                        ""
-                            + "{\n"
-                            + "    \"gender\": \"MALE\",\n"
-                            + "    \"name\": \"Name:name-1\"\n"
-                            + "}")
+                    externalValue = "openapi/user/post_request_default.json")
               }))
   public Response postUser(UserRequest userRequest) {
 
@@ -198,6 +153,7 @@ public class UserController {
     @Parameter(
         name = "id",
         description = "ユーザーID",
+        required = true,
         example = "57d1a3b9-bb09-42f4-9913-941de0a7d4cb")
   })
   @RequestBody(
@@ -207,12 +163,7 @@ public class UserController {
               examples = {
                 @ExampleObject(
                     name = "default",
-                    value =
-                        ""
-                            + "{\n"
-                            + "    \"gender\": \"MALE\",\n"
-                            + "    \"name\": \"Name:name-1\"\n"
-                            + "}")
+                    externalValue = "openapi/user/put_request_default.json")
               }))
   public void putUser(@PathParam("id") String id, UserRequest userRequest) {
     updateUser.invoke(userRequest.toModel(id));
@@ -227,6 +178,7 @@ public class UserController {
     @Parameter(
         name = "id",
         description = "ユーザーID",
+        required = true,
         example = "57d1a3b9-bb09-42f4-9913-941de0a7d4cb")
   })
   public void deleteUser(@PathParam("id") String id) {
@@ -243,21 +195,17 @@ public class UserController {
         @Content(
             mediaType = MediaType.APPLICATION_JSON,
             schema = @Schema(implementation = BaseResponseBody.class),
-            examples = @ExampleObject(name = "default", value = "{\"ok\": true}"))
+            examples = @ExampleObject(name = "default", externalValue = "openapi/response_ok.json"))
       },
       responseCode = "200")
-  @Parameters(@Parameter(name = "id", description = "ユーザーID"))
+  @Parameters(@Parameter(name = "id", description = "ユーザーID", required = true))
   @RequestBody(
       description = "アップロードファイルを選択してください",
+      required = true,
       content =
           @Content(
               mediaType = MediaType.MULTIPART_FORM_DATA,
-              schema =
-                  @Schema(
-                      type = SchemaType.OBJECT,
-                      properties = {
-                        @SchemaProperty(name = "file", type = SchemaType.STRING, format = "binary"),
-                      })))
+              schema = @Schema(ref = OpenApiSchema.UploadFile)))
   public Response postUploadUserFile(@PathParam("id") String id, EntityPart file) {
 
     String name = file.getName();
@@ -276,7 +224,7 @@ public class UserController {
   @Produces(value = MediaType.TEXT_PLAIN)
   @Operation(summary = "ユーザー情報のファイルをダウンロードします")
   @APIResponse(responseCode = "200")
-  @Parameters({@Parameter(name = "id", description = "ユーザーID")})
+  @Parameters({@Parameter(name = "id", description = "ユーザーID", required = true)})
   public Response getDownloadUserFile(@PathParam("id") String id) {
 
     StreamingOutput stream =
