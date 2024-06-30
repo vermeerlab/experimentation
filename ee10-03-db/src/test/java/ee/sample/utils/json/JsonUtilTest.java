@@ -37,7 +37,6 @@ public class JsonUtilTest {
     assertEquals(Optional.empty(), testJson);
   }
 
-  @SuppressWarnings("unused")
   private static class TestJson {
     String item1;
     String item2;

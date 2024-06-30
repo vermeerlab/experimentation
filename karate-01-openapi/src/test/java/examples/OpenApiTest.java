@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-@Tag("ee10-01-openapi")
+@Tag("e2eTest")
 class OpenApiTest {
 
   @Test
