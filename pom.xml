@@ -17,6 +17,7 @@
         <module>ee10-02-openapi</module>
         <module>ee10-03-db</module>
         <module>karate-01-openapi</module>
+        <module>datastore</module>
     </modules>
 
 </project>

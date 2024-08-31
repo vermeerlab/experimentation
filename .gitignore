@@ -28,3 +28,4 @@ hs_err_pid*
 #exclude
 !*/maven-wrapper.jar
 
+*/build

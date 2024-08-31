@@ -21,6 +21,15 @@
         <microprofile.version>6.1</microprofile.version>
     </properties>
 
+    <!-- flyway -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>redgate</id>
+            <url>https://download.red-gate.com/maven/release</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <!-- flyway -->
+
     <dependencies>
         <dependency>
             <groupId>jakarta.platform</groupId>
@@ -40,7 +49,7 @@
         <dependency>
             <groupId>org.microprofile-ext.openapi-ext</groupId>
             <artifactId>openapi-ui</artifactId>
-            <version>2.1.0</version>
+            <version>2.0.0</version>
         </dependency>
 
         <dependency>
@@ -68,13 +77,36 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.16.1</version>
+            <version>2.17.2</version>
             <type>jar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>com.redgate.flyway</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>10.17.2</version>
+                <configuration>
+                    <url>jdbc:h2:tcp://localhost:9093/~/appdata</url>
+                    <user>sa</user>
+                    <password></password>
+                    <cleanDisabled>false</cleanDisabled>
+                    <locations>
+                        <location>classpath:/db/migration/ddl</location>
+                        <location>classpath:/db/migration/dml/common</location>
+                        <location>${flyway-location}</location>
+                    </locations>
+                </configuration>
+            </plugin>
 
             <!-- for mvnw （このpluginがないと実行エラーになる） -->
             <plugin>
@@ -86,7 +118,7 @@
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven3-plugin</artifactId>
-                <version>1.10.13</version>
+                <version>1.10.14</version>
                 <configuration>
                     <container>
                         <systemProperties>
@@ -115,6 +147,25 @@
                 <cargo.maven.containerUrl>https://repo.maven.apache.org/maven2/fish/payara/distributions/payara/6.2024.5/payara-6.2024.5.zip</cargo.maven.containerUrl>
             </properties>
         </profile>
+
+        <!-- flyway -->
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>default</id>
+            <properties>
+                <flyway-location>classpath:/db/migration/dml/dev</flyway-location>
+            </properties>
+        </profile>
+        <profile>
+            <id>testDb</id>
+            <properties>
+                <flyway-location>classpath:/db/migration/dml/test</flyway-location>
+            </properties>
+        </profile>
+        <!-- flyway -->
+
     </profiles>
 
 </project>
