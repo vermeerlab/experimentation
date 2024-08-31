@@ -1,4 +1,4 @@
-package ee.sample.apps.context.user.adaptor.repository;
+package ee.sample.apps.context.user.application.repository;
 
 import ee.sample.apps.context.user.domain.User;
 import ee.sample.apps.context.user.domain.UserId;

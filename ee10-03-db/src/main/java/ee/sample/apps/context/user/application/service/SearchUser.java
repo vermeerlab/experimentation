@@ -1,6 +1,6 @@
-package ee.sample.apps.context.user.application;
+package ee.sample.apps.context.user.application.service;
 
-import ee.sample.apps.context.user.adaptor.repository.UserRepository;
+import ee.sample.apps.context.user.application.repository.UserRepository;
 import ee.sample.apps.context.user.domain.User;
 import ee.sample.apps.context.user.domain.UserId;
 import ee.sample.apps.context.user.domain.UserSearchCondition;

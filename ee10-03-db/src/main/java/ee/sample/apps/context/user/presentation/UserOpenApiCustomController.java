@@ -3,7 +3,7 @@ package ee.sample.apps.context.user.presentation;
 import ee.sample.apps.common.presentation.openapi.BaseResponseBody;
 import ee.sample.apps.common.presentation.openapi.OpenApiSchema;
 import ee.sample.apps.common.presentation.openapi.ResponseFactory;
-import ee.sample.apps.context.user.application.SearchUser;
+import ee.sample.apps.context.user.application.service.SearchUser;
 import ee.sample.apps.context.user.domain.Gender;
 import ee.sample.apps.context.user.domain.UserSearchCondition;
 import ee.sample.apps.context.user.domain.UserSearchMultiGenderCondition;

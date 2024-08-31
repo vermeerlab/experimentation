@@ -1,7 +1,7 @@
 package ee.sample.apps.context.user.infrastructure.datastore;
 
 import ee.sample.apps.common.domain.part.text.Text;
-import ee.sample.apps.context.user.adaptor.repository.UserRepository;
+import ee.sample.apps.context.user.application.repository.UserRepository;
 import ee.sample.apps.context.user.domain.Gender;
 import ee.sample.apps.context.user.domain.User;
 import ee.sample.apps.context.user.domain.UserId;
